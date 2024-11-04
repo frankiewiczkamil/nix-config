@@ -20,7 +20,7 @@
   # User account settings
   # users.users.kamil = {
   #   name = "kamil";
-  #   isNormalUser = true;
+  #   # isNormalUser = true;
   #   # extraGroups = [ "wheel" "audio" "video" ];
   # };
 }
