@@ -3,7 +3,7 @@
     pkgs.direnv
     pkgs.nix-direnv
     pkgs.fzf
-    pkgs.gnupg
+    pkgs.pinentry-curses
     pkgs.zsh
     pkgs.zsh-powerlevel10k
 ]

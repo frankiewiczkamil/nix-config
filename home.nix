@@ -4,6 +4,12 @@
 
   home.packages = import ./home-packages.nix { pkgs = pkgs; };
   
+  home.file = {
+    ".gnupg/gpg-agent.conf".text = ''
+      pinentry-program ${pkgs.pinentry-curses}/bin/pinentry
+    '';
+  };
+
   home.sessionVariables = {
       EDITOR = "vim";
   };
@@ -14,6 +20,7 @@
       enable = true;
       nix-direnv.enable = true;
     };
+    gpg.enable = true;
     fzf = {
       enable = true;
       enableZshIntegration = true;
