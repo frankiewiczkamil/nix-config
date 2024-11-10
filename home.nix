@@ -3,7 +3,7 @@
   home.stateVersion = "24.05";
 
   home.packages = import ./home-packages.nix { pkgs = pkgs; };
-  
+
   home.file = {
     ".gnupg/gpg-agent.conf".text = ''
       default-cache-ttl 36000
@@ -15,7 +15,7 @@
   };
 
   home.sessionVariables = {
-      EDITOR = "vim";
+    EDITOR = "vim";
   };
   programs.home-manager.enable = true;
 
@@ -42,5 +42,4 @@
   };
 
   home.file.".p10k.zsh".text = builtins.readFile ./p10k.zsh;
-
 }

@@ -1,9 +1,13 @@
-{ config, pkgs, system, ... }:
+{
+  config,
+  pkgs,
+  system,
+  ...
+}:
 
 {
   networking.hostName = "kamil";
   environment.systemPackages = import ./system-packages.nix { pkgs = pkgs; };
-
 
   nix.settings.experimental-features = "nix-command flakes";
   programs.zsh.enable = true;
