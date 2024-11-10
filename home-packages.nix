@@ -1,10 +1,12 @@
 { pkgs }:
 [
-    pkgs.direnv
-    pkgs.nix-direnv
-    pkgs.fira-code-nerdfont
-    pkgs.fzf
-    pkgs.pinentry-curses
-    pkgs.zsh
-    pkgs.zsh-powerlevel10k
+  pkgs.direnv
+  pkgs.nix-direnv
+  pkgs.fira-code-nerdfont
+  pkgs.fzf
+  pkgs.nil
+  pkgs.nixfmt-rfc-style
+  pkgs.pinentry-curses
+  pkgs.zsh
+  pkgs.zsh-powerlevel10k
 ]
