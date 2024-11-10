@@ -1,8 +1,6 @@
 {
-    description = "Nix Configurations";
-
     inputs = {
-        nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-24.05-darwin";
+        nixpkgs.url = "github:nixos/nixpkgs/24.05";
 
         nix-darwin = {
             url = "github:LnL7/nix-darwin";
