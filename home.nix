@@ -25,6 +25,7 @@
       nix-direnv.enable = true;
     };
     gpg.enable = true;
+    gpg.settings.no-symkey-cache = false;
     fzf = {
       enable = true;
       enableZshIntegration = true;
