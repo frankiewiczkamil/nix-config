@@ -7,7 +7,7 @@
 
 {
   networking.hostName = "kamil";
-  environment.systemPackages = import ./system-packages.nix { pkgs = pkgs; };
+  environment.systemPackages = import ./darwin-packages.nix { pkgs = pkgs; };
 
   nix.settings.experimental-features = "nix-command flakes";
   programs.zsh.enable = true;

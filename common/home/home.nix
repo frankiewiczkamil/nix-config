@@ -38,7 +38,7 @@
       initExtra = ''
         source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       '';
-      initExtraBeforeCompInit = builtins.readFile ./zshrc;
+      initExtraBeforeCompInit = builtins.readFile ./zsh/zshrc;
     };
     git = {
       enable = true;
@@ -56,5 +56,5 @@
     };
   };
 
-  home.file.".p10k.zsh".text = builtins.readFile ./p10k.zsh;
+  home.file.".p10k.zsh".text = builtins.readFile ./zsh/p10k.zsh;
 }

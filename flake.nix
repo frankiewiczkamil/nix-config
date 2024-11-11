@@ -20,21 +20,22 @@
       ...
     }:
     let
-      configuration = ./darwin-configuration.nix;
-      configurationRevision = self.rev or self.dirtyRev or null;
+      darwin-configuration = ./common/darwin/darwin-configuration.nix;
     in
     {
       darwinConfigurations = {
         kamil = nix-darwin.lib.darwinSystem {
           modules = [
-            configuration
+            darwin-configuration
             home-manager.darwinModules.home-manager
             {
               users.users.kamil.home = "/Users/kamil";
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.verbose = true;
-              home-manager.users.kamil = import ./home.nix;
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                verbose = true;
+                users.kamil = import ./common/home/home.nix;
+              };
             }
           ];
         };
