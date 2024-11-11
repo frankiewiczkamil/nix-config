@@ -33,7 +33,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               verbose = true;
-              users.kamil = import ../common/home/home.nix;
+              users.kamil = import ../common/home/mac-home.nix;
             };
           }
         ];

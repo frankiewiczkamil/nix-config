@@ -2,14 +2,10 @@
 {
   home.stateVersion = "24.05";
 
-  home.packages = import ./home-packages.nix { pkgs = pkgs; };
+  home.packages = import ./mac-home-packages.nix { pkgs = pkgs; };
 
   home.file = {
     ".gnupg/gpg-agent.conf".text = ''
-      default-cache-ttl 36000
-      default-cache-ttl-ssh 36000
-      max-cache-ttl 72000
-      max-cache-ttl-ssh 72000
       pinentry-program ${pkgs.pinentry_mac}/bin/pinentry-mac
     '';
   };
@@ -25,7 +21,6 @@
       nix-direnv.enable = true;
     };
     gpg.enable = true;
-    gpg.settings.no-symkey-cache = false;
     fzf = {
       enable = true;
       enableZshIntegration = true;
