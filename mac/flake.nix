@@ -21,22 +21,26 @@
     }:
     let
       darwin-configuration = ../common/darwin/darwin-configuration.nix;
+      createDarwinConfig =
+        user-name:
+        nix-darwin.lib.darwinSystem {
+          modules = [
+            darwin-configuration
+            home-manager.darwinModules.home-manager
+            {
+              users.users.kamil.home = "/Users/${user-name}";
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                verbose = true;
+                users.kamil = import ../common/home/mac-home.nix;
+              };
+            }
+          ];
+        };
     in
     {
-      darwinConfigurations.mac1 = nix-darwin.lib.darwinSystem {
-        modules = [
-          darwin-configuration
-          home-manager.darwinModules.home-manager
-          {
-            users.users.kamil.home = "/Users/kamil";
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              verbose = true;
-              users.kamil = import ../common/home/mac-home.nix;
-            };
-          }
-        ];
-      };
+      darwinConfigurations.mac1 = createDarwinConfig ("kamil");
+      darwinConfigurations.mac2 = createDarwinConfig ("kamil.frankiewicz");
     };
 }
