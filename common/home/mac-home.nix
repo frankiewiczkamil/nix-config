@@ -1,3 +1,4 @@
+git-config:
 { config, pkgs, ... }:
 {
   home.stateVersion = "24.05";
@@ -35,20 +36,7 @@
       '';
       initExtraBeforeCompInit = builtins.readFile ./zsh/zshrc;
     };
-    git = {
-      enable = true;
-      userName = "kamil";
-      userEmail = "frankiewiczkamil@gmail.com";
-      signing = {
-        key = "0x12A95E73B631A6FF";
-        signByDefault = true;
-      };
-      extraConfig = {
-        init = {
-          defaultBranch = "main";
-        };
-      };
-    };
+    git = git-config;
   };
 
   home.file.".p10k.zsh".text = builtins.readFile ./zsh/p10k.zsh;

@@ -21,8 +21,10 @@
     }:
     let
       darwin-configuration = ../common/darwin/darwin-configuration.nix;
-      createDarwinConfig =
-        user-name:
+      darwinHomeConfigFactory = import ../common/home/mac-home.nix;
+
+      darwinConfigFactory =
+        { user-name, git-config }:
         nix-darwin.lib.darwinSystem {
           modules = [
             darwin-configuration
@@ -33,14 +35,20 @@
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 verbose = true;
-                users.kamil = import ../common/home/mac-home.nix;
+                users.kamil = darwinHomeConfigFactory git-config;
               };
             }
           ];
         };
     in
     {
-      darwinConfigurations.mac1 = createDarwinConfig ("kamil");
-      darwinConfigurations.mac2 = createDarwinConfig ("kamil.frankiewicz");
+      darwinConfigurations.mac1 = darwinConfigFactory {
+        user-name = "kamil";
+        git-config = import ../priv/git-config.nix;
+      };
+      darwinConfigurations.mac2 = darwinConfigFactory {
+        user-name = "kamil.frankiewicz";
+        git-config = import ../priv/git-config.nix; # todo add custom git config
+      };
     };
 }
