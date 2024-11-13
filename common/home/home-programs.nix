@@ -1,15 +1,10 @@
-{
-  pkgs,
-  git-config,
-  gpg-config,
-}:
+{ pkgs }:
 {
   home-manager.enable = true;
   direnv = {
     enable = true;
     nix-direnv.enable = true;
   };
-  gpg = gpg-config;
   fzf = {
     enable = true;
     enableZshIntegration = true;
@@ -24,5 +19,4 @@
     '';
     initExtraBeforeCompInit = builtins.readFile ./zsh/zshrc;
   };
-  git = git-config;
 }

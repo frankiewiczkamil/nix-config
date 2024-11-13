@@ -1,5 +1,8 @@
 git-config:
 { config, pkgs, ... }:
+let
+  home-programs = import ./home-programs.nix { pkgs = pkgs; };
+in
 {
   home.stateVersion = "24.05";
 
@@ -15,12 +18,9 @@ git-config:
     EDITOR = "vim";
   };
 
-  programs = import ./home-programs.nix {
-    pkgs = pkgs;
-    git-config = git-config;
-    gpg-config = {
-      enable = true;
-    };
+  programs = home-programs // {
+    git = git-config;
+    gpg.enable = true;
   };
 
   home.file.".p10k.zsh".text = builtins.readFile ./zsh/p10k.zsh;

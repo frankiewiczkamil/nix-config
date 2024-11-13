@@ -1,5 +1,8 @@
 git-config:
 { config, pkgs, ... }:
+let
+  home-programs = import ./home-programs.nix { pkgs = pkgs; };
+in
 {
   home.stateVersion = "24.05";
 
@@ -18,11 +21,9 @@ git-config:
   home.sessionVariables = {
     EDITOR = "vim";
   };
-
-  programs = import ./home-programs.nix {
-    pkgs = pkgs;
-    git-config = git-config;
-    gpg-config = {
+  programs = home-programs // {
+    git = git-config;
+    gpg = {
       enable = true;
       settings.no-symkey-cache = true;
     };
