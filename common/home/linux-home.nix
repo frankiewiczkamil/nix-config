@@ -1,8 +1,9 @@
+git-config:
 { config, pkgs, ... }:
 {
   home.stateVersion = "24.05";
 
-  home.packages = import ./home-packages.nix { pkgs = pkgs; };
+  home.packages = import ./home-packages.nix { pkgs = pkgs; } ++ [ pkgs.pinentry-curses ];
 
   home.file = {
     ".gnupg/gpg-agent.conf".text = ''
@@ -10,7 +11,7 @@
       default-cache-ttl-ssh 36000
       max-cache-ttl 72000
       max-cache-ttl-ssh 72000
-      pinentry-program ${pkgs.pinentry_mac}/bin/pinentry-mac
+      pinentry-program ${pkgs.pinentry_mac}/bin/pinentry-curses
     '';
   };
 
@@ -24,8 +25,10 @@
       enable = true;
       nix-direnv.enable = true;
     };
-    gpg.enable = true;
-    gpg.settings.no-symkey-cache = false;
+    gpg = {
+      enable = true;
+      settings.no-symkey-cache = true;
+    };
     fzf = {
       enable = true;
       enableZshIntegration = true;
@@ -40,20 +43,7 @@
       '';
       initExtraBeforeCompInit = builtins.readFile ./zsh/zshrc;
     };
-    git = {
-      enable = true;
-      userName = "kamil";
-      userEmail = "frankiewiczkamil@gmail.com";
-      signing = {
-        key = "0x12A95E73B631A6FF";
-        signByDefault = true;
-      };
-      extraConfig = {
-        init = {
-          defaultBranch = "main";
-        };
-      };
-    };
+    git = git-config;
   };
 
   home.file.".p10k.zsh".text = builtins.readFile ./zsh/p10k.zsh;
