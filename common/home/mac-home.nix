@@ -14,29 +14,13 @@ git-config:
   home.sessionVariables = {
     EDITOR = "vim";
   };
-  programs.home-manager.enable = true;
 
-  programs = {
-    direnv = {
+  programs = import ./home-programs.nix {
+    pkgs = pkgs;
+    git-config = git-config;
+    gpg-config = {
       enable = true;
-      nix-direnv.enable = true;
     };
-    gpg.enable = true;
-    fzf = {
-      enable = true;
-      enableZshIntegration = true;
-    };
-    zsh = {
-      enable = true;
-      enableCompletion = true;
-      autosuggestion.enable = true;
-      syntaxHighlighting.enable = true;
-      initExtra = ''
-        source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-      '';
-      initExtraBeforeCompInit = builtins.readFile ./zsh/zshrc;
-    };
-    git = git-config;
   };
 
   home.file.".p10k.zsh".text = builtins.readFile ./zsh/p10k.zsh;
