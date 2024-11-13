@@ -6,7 +6,6 @@
   pkgs.fzf
   pkgs.nil
   pkgs.nixfmt-rfc-style
-  pkgs.pinentry_mac
   pkgs.zsh
   pkgs.zsh-powerlevel10k
 ]

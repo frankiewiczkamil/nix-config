@@ -3,7 +3,7 @@ git-config:
 {
   home.stateVersion = "24.05";
 
-  home.packages = import ./mac-home-packages.nix { pkgs = pkgs; };
+  home.packages = import ./home-packages.nix { pkgs = pkgs; } ++ [ pkgs.pinentry_mac ];
 
   home.file = {
     ".gnupg/gpg-agent.conf".text = ''
