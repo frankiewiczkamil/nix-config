@@ -1,4 +1,4 @@
-{
+platform: {
   config,
   pkgs,
   system,
@@ -19,7 +19,7 @@
 
   security.pam.enableSudoTouchIdAuth = true;
 
-  nixpkgs.hostPlatform = "aarch64-darwin";
+  nixpkgs.hostPlatform = platform;
 
   # User account settings
   # users.users.kamil = {

@@ -20,11 +20,18 @@
       ...
     }:
     let
-      darwin-configuration = ../common/darwin/darwin-configuration.nix;
+      darwinConfigurationFactory = import ../common/darwin/darwin-configuration-factory.nix;
       darwinHomeConfigFactory = import ../common/home/mac-home.nix;
 
-      darwinConfigFactory =
-        { user-name, git-config }:
+      configFactory =
+        {
+          user-name,
+          git-config,
+          platform,
+        }:
+        let
+          darwin-configuration = darwinConfigurationFactory platform;
+        in
         nix-darwin.lib.darwinSystem {
           modules = [
             darwin-configuration
@@ -42,13 +49,20 @@
         };
     in
     {
-      darwinConfigurations.mac1 = darwinConfigFactory {
+      darwinConfigurations.mac1 = configFactory {
         user-name = "kamil";
         git-config = import ../priv/git-config.nix;
+        platform = "aarch64-darwin";
       };
-      darwinConfigurations.mac2 = darwinConfigFactory {
+      darwinConfigurations.mac2 = configFactory {
         user-name = "kamil.frankiewicz";
         git-config = import ../priv/git-config.nix; # todo add custom git config
+        platform = "aarch64-darwin";
+      };
+      darwinConfigurations.mac3 = configFactory {
+        user-name = "kamil";
+        git-config = import ../priv/git-config.nix;
+        platform = "x86_64-darwin";
       };
     };
 }
