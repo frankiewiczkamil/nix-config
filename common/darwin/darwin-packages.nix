@@ -3,7 +3,6 @@
   pkgs.bat
   pkgs.git
   pkgs.jq
-  pkgs.lnav
   pkgs.neofetch
   pkgs.nmap
   pkgs.socat
