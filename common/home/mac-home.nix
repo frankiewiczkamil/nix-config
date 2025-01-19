@@ -10,6 +10,10 @@ in
 
   home.file = {
     ".gnupg/gpg-agent.conf".text = ''
+      default-cache-ttl 86400 # 1 day
+      default-cache-ttl-ssh 86400
+      max-cache-ttl 604800 # 1 week
+      max-cache-ttl-ssh 604800
       pinentry-program ${pkgs.pinentry_mac}/bin/pinentry-mac
     '';
   };
