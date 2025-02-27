@@ -1,6 +1,7 @@
 { pkgs }:
 [
   pkgs.bat
+  pkgs.devenv
   pkgs.git
   pkgs.jq
   pkgs.neofetch
