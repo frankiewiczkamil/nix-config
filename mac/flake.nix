@@ -22,6 +22,7 @@
     let
       darwinConfigurationFactory = import ../common/darwin/darwin-configuration-factory.nix;
       darwinHomeConfigFactory = import ../common/home/mac-home.nix;
+      withLinuxBuilder = import ../common/darwin/linux-builder.nix;
 
       configFactory =
         {
@@ -47,8 +48,15 @@
             }
           ];
         };
+
     in
+
     {
+      darwinConfigurations.linux-builder = withLinuxBuilder (configFactory {
+        user-name = "kamil";
+        git-config = import ../priv/git-config.nix;
+        platform = "aarch64-darwin";
+      });
       darwinConfigurations.mac1 = configFactory {
         user-name = "kamil";
         git-config = import ../priv/git-config.nix;
