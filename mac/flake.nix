@@ -20,57 +20,53 @@
       ...
     }:
     let
-      darwinConfigurationFactory = import ../common/darwin/darwin-configuration-factory.nix;
-      darwinHomeConfigFactory = import ../common/home/mac-home.nix;
-      withLinuxBuilder = import ../common/darwin/linux-builder.nix;
+      darwin-module-factory = import ./darwin-module-factory.nix;
+      home-manager-module-factory = import ./darwin-home-manager-module-factory.nix;
+      home-config-factory = import ./darwin-home-config-factory.nix;
 
-      configFactory =
+      priv-git-config = import ../priv/git-config.nix;
+
+      config-factory =
         {
-          user-name,
-          git-config,
-          platform,
+          home-manager-module,
+          darwin-module,
         }:
-        let
-          darwin-configuration = darwinConfigurationFactory platform;
-        in
         nix-darwin.lib.darwinSystem {
           modules = [
-            darwin-configuration
+            darwin-module
             home-manager.darwinModules.home-manager
-            {
-              users.users.kamil.home = "/Users/${user-name}";
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                verbose = true;
-                users.kamil = darwinHomeConfigFactory git-config;
-              };
-            }
+            home-manager-module
           ];
         };
-
     in
-
     {
-      darwinConfigurations.linux-builder = withLinuxBuilder (configFactory {
-        user-name = "kamil";
-        git-config = import ../priv/git-config.nix;
-        platform = "aarch64-darwin";
-      });
-      darwinConfigurations.mac1 = configFactory {
-        user-name = "kamil";
-        git-config = import ../priv/git-config.nix;
-        platform = "aarch64-darwin";
-      };
-      darwinConfigurations.mac2 = configFactory {
-        user-name = "kamil.frankiewicz";
-        git-config = import ../priv/git-config.nix; # todo add custom git config
-        platform = "aarch64-darwin";
-      };
-      darwinConfigurations.mac3 = configFactory {
-        user-name = "kamil";
-        git-config = import ../priv/git-config.nix;
-        platform = "x86_64-darwin";
+      darwinConfigurations = {
+        spaceship = config-factory {
+          darwin-module = darwin-module-factory {
+            platform = "aarch64-darwin";
+            hostname = "spaceship";
+          };
+          home-manager-module = home-manager-module-factory {
+            user-name = "kamil";
+            home-config = home-config-factory {
+              git-config = priv-git-config;
+              state-version = "24.11";
+            };
+          };
+        };
+        chariot = config-factory {
+          darwin-module = darwin-module-factory {
+            platform = "x86_64-darwin";
+            hostname = "chariot";
+          };
+          home-manager-module = home-manager-module-factory {
+            user-name = "kamil";
+            home-config = home-config-factory {
+              git-config = priv-git-config;
+              state-version = "24.11";
+            };
+          };
+        };
       };
     };
 }
