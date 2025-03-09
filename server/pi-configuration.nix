@@ -23,10 +23,10 @@
       # "reset-raspberrypi" # required for vl805 firmware to load
     ];
   };
-
+  sdImage.compressImage = false;
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/7CB50D4B-9DF9-3646-8316-CB3C06C369BB";
-    fsType = "vfat";
+    device = "/dev/disk/by-label/NIXOS_SD";
+    fsType = "ext4";
   };
   hardware.enableRedistributableFirmware = true;
 
