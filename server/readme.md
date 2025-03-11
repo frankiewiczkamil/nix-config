@@ -10,8 +10,9 @@ diskutil list
 ```
 
 ```sh
-sudo umount /dev/sdX
-sudo mkfs.ext4 -L NIXOS_SD /dev/sdX
+nix-shell -p e2fsprogs
+sudo umount /dev/diskX
+sudo mkfs.ext4 -L NIXOS_SD /dev/diskX
 sudo e2label /dev/diskX
 ```
 
