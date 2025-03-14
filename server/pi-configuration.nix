@@ -41,7 +41,7 @@
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAX59rFMYi8Rw+m3ragaMYxYLqKzBatAsv1562ndPTTZkDTWWMhTXgNLN4Kh74dANRECrxiQHie33wnIpLAItDEdMPvsFM6/OrdDz7hy7DM67+Fy4Jjxroy/XhBNZNaMPZzfocp+YGecCxouz1BwjtgQqgmxzrwjL9sKeyiG5oQ0S+mtvVUtIs38n9rqVZJDqfSXoYMkwxyZBms6ub26RjqgDx7V0XjKMgujxywyN9tWNu5nN2UEcuixTV3i9FSrsPhhCzY9hAJX09eJic1Yz3hAN5IuhlaiGBcI0Xz4vsTRg13wGYtvTsU7lTbj36G+J47R/5/MO1CkaL/M/DRAHz pi"
     ];
   };
-
+  security.sudo.wheelNeedsPassword = false;
   services.openssh = {
     enable = true;
     settings.PasswordAuthentication = false;
