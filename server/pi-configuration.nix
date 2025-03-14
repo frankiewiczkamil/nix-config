@@ -24,6 +24,10 @@
   hardware.enableRedistributableFirmware = true;
 
   nix.settings.experimental-features = "nix-command flakes";
+  nix.settings.trusted-users = [
+    "root"
+    "pi"
+  ];
   programs.zsh.enable = true;
 
   users.defaultUserShell = pkgs.zsh;
