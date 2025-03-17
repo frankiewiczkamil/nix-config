@@ -48,6 +48,7 @@
     settings.KbdInteractiveAuthentication = false;
   };
   networking = {
+    wireless.enable = false;
     networkmanager.enable = false;
     firewall.allowedTCPPorts = [ 22 ];
     hostName = "pikachu";
