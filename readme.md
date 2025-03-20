@@ -13,11 +13,11 @@ nix --extra-experimental-features "nix-command flakes" run nix-darwin -- switch 
 ### update
 
 ```shell
-nix flake update --flake ./mac/flake.nix
+nix flake update --flake ./mac
 ```
 
 ```bash
-darwin-rebuild switch --flake ./mac#mac1 --show-trace
+darwin-rebuild switch --flake ./mac#spaceship --show-trace
 
-# or mac2/mac3/...
+# ./mac#linux-builder | ./mac#chariot | ...
 ```
