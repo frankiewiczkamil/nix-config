@@ -13,18 +13,25 @@
   };
 
   outputs =
-    inputs@{
-      self,
+    {
       nix-darwin,
       home-manager,
       ...
     }:
     let
+      nix-version = "24.11"; # can't use this variable with `rec` keyword inside inputs object, for other args, unfortunately
       darwin-module-factory = import ./darwin-module-factory.nix;
       home-manager-module-factory = import ./darwin-home-manager-module-factory.nix;
       home-config-factory = import ./darwin-home-config-factory.nix;
       with-linux-builder = import ./linux-builder.nix;
       priv-git-config = import ../priv/git-config.nix;
+
+      create-home-config =
+        { git-config }:
+        home-config-factory {
+          inherit git-config;
+          state-version = nix-version;
+        };
 
       config-factory =
         {
@@ -48,9 +55,8 @@
           };
           home-manager-module = home-manager-module-factory {
             user-name = "kamil";
-            home-config = home-config-factory {
+            home-config = create-home-config {
               git-config = priv-git-config;
-              state-version = "24.11";
             };
           };
         };
@@ -61,13 +67,11 @@
           };
           home-manager-module = home-manager-module-factory {
             user-name = "kamil";
-            home-config = home-config-factory {
+            home-config = create-home-config {
               git-config = priv-git-config;
-              state-version = "24.11";
             };
           };
         };
-
         linux-builder = config-factory {
           darwin-module = with-linux-builder (darwin-module-factory {
             platform = "aarch64-darwin";
@@ -75,9 +79,8 @@
           });
           home-manager-module = home-manager-module-factory {
             user-name = "kamil";
-            home-config = home-config-factory {
+            home-config = create-home-config {
               git-config = priv-git-config;
-              state-version = "24.11";
             };
           };
         };
