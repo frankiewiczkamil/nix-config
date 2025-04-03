@@ -1,11 +1,20 @@
 { git-config, state-version }:
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
 let
-  home-programs = import ../common/home/home-programs.nix { pkgs = pkgs; };
+  home-programs = import ../common/home/home-programs.nix {
+    inherit pkgs pkgs-unstable;
+  };
 in
 {
   home = {
-    packages = import ../common/home/home-packages.nix { pkgs = pkgs; } ++ [ pkgs.pinentry_mac ];
+    packages = import ../common/home/home-packages.nix { inherit pkgs pkgs-unstable; } ++ [
+      pkgs.pinentry_mac
+    ];
     file = {
       ".gnupg/gpg-agent.conf".text = ''
         default-cache-ttl 86400 # 1 day

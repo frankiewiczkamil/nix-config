@@ -1,5 +1,6 @@
-{ pkgs }:
+{ pkgs, pkgs-unstable }:
 [
+  pkgs-unstable.devenv
   pkgs.direnv
   pkgs.nix-direnv
   pkgs.fira-code-nerdfont

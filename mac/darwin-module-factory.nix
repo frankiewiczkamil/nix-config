@@ -2,13 +2,14 @@
 {
   config,
   pkgs,
+  pkgs-unstable,
   system,
   ...
 }:
 
 {
-  environment.systemPackages = import ./darwin-packages.nix { pkgs = pkgs; };
-
+  environment.systemPackages = import ./darwin-packages.nix { inherit pkgs pkgs-unstable; };
+  home-manager.extraSpecialArgs = { inherit pkgs-unstable; };
   nix.settings.experimental-features = "nix-command flakes";
   nixpkgs.hostPlatform = platform;
   networking.hostName = hostname;

@@ -1,7 +1,9 @@
-{ pkgs }:
+{
+  pkgs,
+  pkgs-unstable,
+}:
 [
   pkgs.bat
-  pkgs.devenv
   pkgs.git
   pkgs.jq
   pkgs.neofetch

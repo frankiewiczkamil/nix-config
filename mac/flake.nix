@@ -1,7 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/release-24.11";
-
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin = {
       url = "github:LnL7/nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -16,6 +16,8 @@
     {
       nix-darwin,
       home-manager,
+      nixpkgs,
+      nixpkgs-unstable,
       ...
     }:
     let
@@ -37,20 +39,27 @@
         {
           home-manager-module,
           darwin-module,
+          system,
         }:
+        let
+          pkgs-unstable = import nixpkgs-unstable { inherit system; };
+        in
         nix-darwin.lib.darwinSystem {
+          inherit system;
           modules = [
             darwin-module
             home-manager.darwinModules.home-manager
             home-manager-module
           ];
+          specialArgs = { inherit pkgs-unstable; };
         };
     in
     {
       darwinConfigurations = {
-        spaceship = config-factory {
+        spaceship = config-factory rec {
+          system = "aarch64-darwin";
           darwin-module = darwin-module-factory {
-            platform = "aarch64-darwin";
+            platform = system;
             hostname = "spaceship";
           };
           home-manager-module = home-manager-module-factory {
@@ -60,9 +69,10 @@
             };
           };
         };
-        chariot = config-factory {
+        chariot = config-factory rec {
+          system = "x86_64-darwin";
           darwin-module = darwin-module-factory {
-            platform = "x86_64-darwin";
+            platform = system;
             hostname = "chariot";
           };
           home-manager-module = home-manager-module-factory {
@@ -72,9 +82,10 @@
             };
           };
         };
-        linux-builder = config-factory {
-          darwin-module = with-linux-builder (darwin-module-factory {
-            platform = "aarch64-darwin";
+        linux-builder = config-factory rec {
+          system = "aarch64-darwin";
+          create-darwin-module = with-linux-builder (darwin-module-factory {
+            platform = system;
             hostname = "linux-builder";
           });
           home-manager-module = home-manager-module-factory {
