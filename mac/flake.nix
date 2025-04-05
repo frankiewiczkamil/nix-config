@@ -84,7 +84,7 @@
         };
         linux-builder = config-factory rec {
           system = "aarch64-darwin";
-          create-darwin-module = with-linux-builder (darwin-module-factory {
+          darwin-module = with-linux-builder (darwin-module-factory {
             platform = system;
             hostname = "linux-builder";
           });
